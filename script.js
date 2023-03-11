@@ -29,6 +29,7 @@ const quiz = new Quiz(sorular);
 let btn = document.querySelector('.btn-start');
 btn.addEventListener('click', function(){
     if(quiz.sorular.length != quiz.sorularIndex){
+        document.querySelector('.quiz_box').classList.add('active');
         console.log(quiz.soruGetir());
         quiz.sorularIndex +=1;
     }
