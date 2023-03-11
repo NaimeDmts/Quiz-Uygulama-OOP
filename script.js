@@ -28,18 +28,25 @@ const quiz = new Quiz(sorular);
 
 let btn = document.querySelector('.btn-start');
 btn.addEventListener('click', function(){
-        document.querySelector('.quiz_box').classList.add('active');
-        soruGoster( quiz.soruGetir())
+    document.querySelector('.quiz_box').classList.add('active');
+    soruGoster( quiz.soruGetir());
+    document.querySelector('.next_btn').classList.remove('show');
 });
+
 document.querySelector('.next_btn').addEventListener('click', function(){
     if(quiz.sorular.length != quiz.sorularIndex + 1){
         quiz.sorularIndex += 1;
+        document.querySelector('.next_btn').classList.remove('show');
         soruGoster( quiz.soruGetir())
     }
     else{
         console.log("Quiz Bitti.")
     }
-})
+});
+
+const option_list = document.querySelector('.option_list');
+const correctIcon = '<div class="correct"><i class="fas fa-check"></i></div>';
+const incorrectIcon =  '<div class="incorrect"><i class="fas fa-times"></i></div>';
 
 function soruGoster(soru){
     let question = `<span>${soru.soruMetni}</span>`;
@@ -51,6 +58,32 @@ function soruGoster(soru){
             <span><b>${cevap}</b>: ${soru.cevapSecenekleri[cevap]}</span>
         </div>`
     }
+   
     document.querySelector('.question_text').innerHTML = question;
-    document.querySelector('.option_list').innerHTML = options;
+    option_list.innerHTML = options;
+    const option = option_list.querySelectorAll(".option");
+
+    for(let opt of option){
+        opt.setAttribute("onclick", "optionSelected(this)")
+    }
+}
+
+function optionSelected(option){
+    let cevap = option.querySelector('span b').textContent;
+    let soru = quiz.soruGetir();
+
+    if(soru.cevabiKontrolEt(cevap)){
+        option.classList.add('correct');
+        option.insertAdjacentHTML("beforeEnd", correctIcon);
+    }
+    else{
+        option.classList.add('incorrect');
+        option.insertAdjacentHTML("beforeEnd", incorrectIcon);
+    } 
+
+    for(let i=0; i < option_list.children.length; i++){
+        option_list.children[i].classList.add('disabled');
+    }
+    
+    document.querySelector('.next_btn').classList.add('show');
 }

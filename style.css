@@ -50,3 +50,17 @@
     color: #721c24;
     background-color: #f8d7da;
 }
+.quiz_box .option_list .option.disabled{
+    pointer-events: none;
+}
+.quiz_box .card-footer .next_btn{
+    opacity: 0;
+    pointer-events: none;
+    transform: scale(0.9);
+    transition: all 0.3s ease;
+}
+.quiz_box .card-footer .next_btn.show{
+    opacity: 1;
+    pointer-events: auto;
+    transform: scale(1);
+}
