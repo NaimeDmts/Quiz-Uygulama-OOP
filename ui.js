@@ -8,7 +8,9 @@ function UI(){
     this.correctIcon = '<div class="correct"><i class="fas fa-check"></i></div>',
     this.incorrectIcon =  '<div class="incorrect"><i class="fas fa-times"></i></div>',
     this.question_text = document.querySelector('.question_text'),
-    this.score_box = document.querySelector('.score_box')
+    this.score_box = document.querySelector('.score_box'),
+    this.time_text = document.querySelector('.time_text'),
+    this.time_second = document.querySelector('.time_second')
 }
 UI.prototype.soruGoster =function(soru){
     let question = `<span>${soru.soruMetni}</span>`;
