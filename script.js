@@ -4,6 +4,7 @@ const ui = new UI();
 ui.btn_start.addEventListener('click', function(){
     ui.quiz_box.classList.add('active');
     startTimer(10);
+    startTimeLine();
     ui.soruGoster( quiz.soruGetir());
     ui.soruSayisiniGoster(quiz.sorularIndex +1 ,quiz.sorular.length);
     ui.next_btn.classList.remove('show');
@@ -13,13 +14,16 @@ ui.next_btn.addEventListener('click', function(){
     if(quiz.sorular.length != quiz.sorularIndex + 1){
         quiz.sorularIndex += 1;
         clearInterval(counter);
+        clearInterval(counter_line);
         startTimer(10);
+        startTimeLine();
         ui.soruSayisiniGoster(quiz.sorularIndex +1 ,quiz.sorular.length);
         ui.next_btn.classList.remove('show');
         ui.soruGoster( quiz.soruGetir());
     }
     else{
         clearInterval(counter);
+        clearInterval(counter_line);
         ui.score_box.classList.add('active');
         ui.quiz_box.classList.remove('active');
         ui.skoruGoster(quiz.sorular.length, quiz.dogruCevapSayisi);
@@ -39,6 +43,7 @@ ui.btn_replay.addEventListener('click', function(){
 
 function optionSelected(option){
     clearInterval(counter);
+    clearInterval(counter_line);
     let cevap = option.querySelector('span b').textContent;
     let soru = quiz.soruGetir();
 
@@ -81,6 +86,21 @@ function startTimer(time){
                 option.classList.add('disabled');
             }
             ui.next_btn.classList.add('show');
+        }
+    }
+}
+
+let counter_line;
+function startTimeLine(){
+    let line_width = 0;
+    counter_line = setInterval(timer, 20);
+
+    function timer(){
+        line_width +=1;
+        ui.time_line.style.width = line_width + "px";
+
+        if(line_width > 548){
+            clearInterval(counter_line);
         }
     }
 }
